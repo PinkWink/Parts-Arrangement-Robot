@@ -69,8 +69,7 @@ class DetectorManager():
         self.model.load_weights(self.weights_path)
         if torch.cuda.is_available():
             self.model.cuda()
-        else:
-            raise IOError('CUDA not found.')
+
         self.model.eval() # Set in evaluation mode
         rospy.loginfo("Deep neural network loaded")
 
@@ -106,7 +105,7 @@ class DetectorManager():
 
         # Configure input
         input_img = self.imagePreProcessing(self.cv_image)
-        input_img = Variable(input_img.type(torch.cuda.FloatTensor))
+        input_img = Variable(input_img.type(torch.FloatTensor))
 
         # Get detections from network
         with torch.no_grad():
